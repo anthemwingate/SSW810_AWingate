@@ -1,0 +1,41 @@
+Part 1
+SELECT Name
+	FROM  students
+	    where CWID = '11461'
+
+Part 2
+SELECT Major, "Count"(*) as cnt 
+	FROM  students
+	    GROUP BY Major
+
+Part 3
+SELECT g.Grades FROM grades g
+GROUP BY Grades
+HAVING COUNT(*) = (
+                   SELECT MAX(Cnt) 
+                   FROM(
+                         SELECT COUNT(*) as Cnt
+                         FROM grades g
+                         GROUP BY g.Grades
+                        ) tmp
+                    )
+
+Part 4
+SELECT s.Name, s.CWID, s.Major, g.Course, g.Grades
+	FROM students s
+		JOIN grades g
+			ON s.CWID=g.Student_CWID
+
+Part 5
+SELECT s.Name, s.CWID, s.Major, g.Course, g.Grades
+	FROM students s
+		JOIN grades g
+			ON s.CWID=g.Student_CWID
+				WHERE g.Course = 'SSW 540'
+
+Part 6
+SELECT i.CWID, i.Name, i.Dept, g.Course, COUNT(*) as Students
+	FROM  instructors i
+		JOIN grades g
+			ON i.CWID=g.Instructor_CWID
+                GROUP BY g.Course
