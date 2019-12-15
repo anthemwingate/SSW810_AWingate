@@ -1,12 +1,12 @@
 #Project           : Course Tracker
-#Program name      : AWingatehw09
+#Program name      : AWingatehw10_v2.5 rev.py
 #Author            : Anthem Rukiya J. Wingate
 #Creation Date     : 4.10.19
 #Purpose           : Data repository of courses, students, and instructors.  
 # The system will be used to help students track their required courses, the courses they have successfully completed, their grades,  GPA, etc.  
 # The system will also be used by faculty advisors to help students to create study plans.
 #Revision History  : Version 3
-#Notes  : 
+#Notes  : Additional revision made for interview submission.
 
 import os
 from prettytable import PrettyTable 
@@ -207,8 +207,9 @@ class Repository:
 def main():
     """ Main program body """
     
-    path = 'C:/Users/Anthe/OneDrive/Documents/Stevens/SSW 810/Homework/AWingateHW10'
-    Repository(path)
+    dir_abs_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+    directory_path = f"{dir_abs_path}/SSW810/AWingatehw10_v2.5%20rev.py"
+    Repository(directory_path)
     
 if __name__ == "__main__":
     main()

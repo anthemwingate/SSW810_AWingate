@@ -1,11 +1,15 @@
-#Project          : Homework 9
-#Program name      : AWingatehw09
+#Project           : Course Tracker
+#Program name      : AWingatehw10_v2.5 rev.py
 #Author            : Anthem Rukiya J. Wingate
-#Submission Date   : tbd
-#Purpose           : Homework Submission 9 - Automated Test File
-#Revision History  : Version 1.0
-#Notes  : Currently revising Test File hw09_test
-""" automated tests for HW08 part """
+#Creation Date     : 4.10.19
+#Purpose           : AWingatehw10_v2.5 rev.py - Automated Test File
+#Revision History  : Version 2.0
+#Notes  : 
+
+""" automated tests for AWingatehw10_v2.5 rev.py """
+
+import os 
+""" imports OS module """
 
 import unittest
 """ imports unit test module """
@@ -18,8 +22,9 @@ class Student_Prettytable_Test(unittest.TestCase):
 
     def test_student_prettytable(self):
         """ Test function for Student Pretty Table  """
-        path = 'C:/Users/Anthe/OneDrive/Documents/Stevens/SSW 810/Homework/AWingateHW09'
-        repo = Repository(path)
+        dir_abs_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+        directory_path = f"{dir_abs_path}/SSW810/AWingatehw10_v2.5%20rev.py"
+        repo = Repository(directory_path)
 
         expected =  [[10103,'Baldwin, C','SFEN',['CS 501', 'SSW 564', 'SSW 567', 'SSW 687'],['SSW 540','SSW 555'], None],
             [10115,'Wyatt, X','SFEN',['CS 5,45', 'SSW 564', 'SSW 567', 'SSW 687'],['SSW 540','SSW 555'], None],
@@ -42,8 +47,9 @@ class Instructor_Prettytable_Test(unittest.TestCase):
 
     def test_student_prettytable(self):
         """ Test function for Instructor Pretty Table  """
-        path = 'C:/Users/Anthe/OneDrive/Documents/Stevens/SSW 810/Homework/AWingateHW09'
-        repo = Repository(path)
+        dir_abs_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+        directory_path = f"{dir_abs_path}/SSW810/AWingatehw10_v2.5%20rev.py"
+        repo = Repository(directory_path)
 
         expected = [['98765','Einstein, A','SFEN','SSW 567',4],
             ['98765','Einstein, A','SFEN','SSW 540',3],
@@ -68,8 +74,9 @@ class Major_Prettytable_Test(unittest.TestCase):
 
     def test_major_prettytable(self):
         """ Test function for Major Pretty Table  """
-        path = 'C:/Users/Anthe/OneDrive/Documents/Stevens/SSW 810/Homework/AWingateHW10'
-        repo = Repository(path)
+        dir_abs_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+        directory_path = f"{dir_abs_path}/SSW810/AWingatehw10_v2.5%20rev.py"
+        repo = Repository(directory_path)
 
         expected = [['SFEN', ['CS 501','CS 545','SSW 540','SSW 555','SSW 564','SSW 567','SSW 687','SSW 689']],
             ['SYEN', ['SYS 611','SYS 645','SYS 750']]]
