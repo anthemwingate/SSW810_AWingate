@@ -208,7 +208,7 @@ def main():
     """ Main program body """
     
     dir_abs_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
-    directory_path = f"{dir_abs_path}/SSW810/AWingatehw10_v2.5%20rev.py"
+    directory_path = f"{dir_abs_path}/AWingatehw10_v2.5%20rev.py"
     Repository(directory_path)
     
 if __name__ == "__main__":
