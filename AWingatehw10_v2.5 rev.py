@@ -1,10 +1,12 @@
-#Project          : Homework 10
+#Project           : Course Tracker
 #Program name      : AWingatehw09
 #Author            : Anthem Rukiya J. Wingate
-#Submission Date   : 4.10.19
-#Purpose           : Homework Submission 10 - University Repository with added functionality
-#Revision History  : Version 2.5
-#Notes  : Couldn't figure out how to add the majors information to the student pretty table
+#Creation Date     : 4.10.19
+#Purpose           : Data repository of courses, students, and instructors.  
+# The system will be used to help students track their required courses, the courses they have successfully completed, their grades,  GPA, etc.  
+# The system will also be used by faculty advisors to help students to create study plans.
+#Revision History  : Version 3
+#Notes  : 
 
 import os
 from prettytable import PrettyTable 
@@ -14,40 +16,23 @@ from collections import defaultdict
 class Student:
     """ Represent a single student """
     
-    # JRR: replaced: def __init__(self, cwid, name, major, req, elec):
     def __init__(self, cwid, name, major):
         self.cwid = cwid
         self.name = name
         self.major = major
-        # JRR: not needed: self.req = req
-        # JRR: not needed: self.elec = elec
-
         self.course_grades = defaultdict(str) # key: course  value: grade
-        # JRR: not needed: self.rem_req = set()
-        # JRR: not needed: self.rem_elec = set() 
+ 
 
     def add_grade(self, course, grade):
         """ assigns grades as values for course keys in default dictionary """
-        if grade in ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-']:  # JRR: note only passing grades
-            self.course_grades[course] = grade
-    
-    """ JRR: Not needed
-    def add_reqorelec(self, req, elec):
-        # assigns courses as values for major keys in default dictionary
 
-        # for keys, values in req.items() and elec.items():
-        for course in self.course_grades:
-            for value in req.values():
-                if self.course_grades[course] == 'F' or value not in self.course_grades:
-                    self.rem_req.add(value)
-            for value in elec.values():
-                if self.course_grades[course] == 'F' or value not in self.course_grades:
-                    self.rem_elec.add(value)
-    """
+        if grade in ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-']:  
+            self.course_grades[course] = grade
+
 
     def info(self, major):
         """ returns field names for repository table """
-        # JRR: please review
+
         rem_req = major.req_courses - set(self.course_grades.keys()) # compute the set difference of courses and required
         if set(self.course_grades.keys()) & major.elec_courses:  # if any courses in common, then electives are met
             rem_elec = None  # empty set
@@ -70,7 +55,6 @@ class Instructor:
         self.cwid = cwid
         self.name = name
         self.dept = dept
-
         self.course_enrollment = defaultdict(int) # key: course  value: number of students enrolled in class
 
     def add_course(self, course):
@@ -90,15 +74,14 @@ class Instructor:
 class Major:
     """ Creates Major class """
     
-    # JRR: def __init__(self, dept, req, elec):
     def __init__(self, dept):
         self.dept = dept
-        self.req_courses = set() # JRR: set of required courses
-        self.elec_courses = set() # JRR: set of elective courses
+        self.req_courses = set() # Key: set of required courses
+        self.elec_courses = set() # Key: set of elective courses
 
     def add_major_course(self, flag, course):
         """ assigns courses to values for department keys """
-        # JRR: add the course to the major
+
         if flag == 'R':
             self.req_courses.add(course)
         elif flag == 'E':
@@ -107,13 +90,9 @@ class Major:
             print("Invalid flag '{flag} for {course} in {self.dept}")                     
 
              
-    # JRR: replace: def info(self, dept, req_course, elec_course):
     def info(self):
         """ returns contents of major class default dictionary as rows for repository table """
-        """ JRR: replace
-        for each in self.dept:
-            yield [each, req_course[each], elec_course[each]]
-        """
+
         return [self.dept, sorted(self.req_courses), sorted(self.elec_courses)]  # each major has only one row
     
     @staticmethod
@@ -132,16 +111,13 @@ class Repository:
         self.instructors = dict()  # key: instructor CWID value: instance of class Instructor
         self.majors = dict() # key: dept value: instance of class Major
 
-        # JRR: don't need: self.req = defaultdict(set) # key: dept value: set of courses
-        # JRR: don't need: self.elec = defaultdict(set) # key: dept value: set of courses
-
         # File access
-        # JRR: read majors first so you can tell Students electives and required when the student is created
+        # Note: read majors first so you can tell Students electives and required when the student is created
         self.read_majors(os.path.join(path, "majors.txt"))
         self.read_students(os.path.join(path, "students.txt"))
         self.read_instructors(os.path.join(path, "instructors.txt"))
         self.read_grades(os.path.join(path, "grades.txt"))
-        # JRR: read majors first: self.read_majors(os.path.join(path, "majors.txt"))
+        # Note: read majors first: self.read_majors(os.path.join(path, "majors.txt"))
 
         # Table Creation
         self.student_prettytable()
@@ -151,31 +127,17 @@ class Repository:
     def read_majors(self, filepath):
         """ Read major information from the specified path and create instances of class Major """
 
-        # JRR: get all Majors from self.major: #tot_dept = list()
+        # Note: get all Majors from self.major: #tot_dept = list()
         for dept, flag, course in self.file_reader(filepath, 3): 
-            if dept not in self.majors:  # JRR: create a new major if this is the first time we see the major
+            if dept not in self.majors:  # Note: create a new major if this is the first time we see the major
                 self.majors[dept] = Major(dept)
 
             self.majors[dept].add_major_course(flag, course)
 
-            """ JRR: replaced
-            if flag == 'R':
-                self.req[dept].add(course)
-            elif flag == 'E':
-                self.elec[dept].add(course)
-            else:
-                raise  ValueError('Not a valid course')
-            if dept not in tot_dept:
-                tot_dept.append(dept)
-            """
-    
-        # JRR: Not needed: self.majors[dept] = Major(tot_dept, self.req, self.elec)
-        
-
     def read_students(self, filepath):
         """ Read students from the specified path and create instances of class Student """
         for cwid, name, major in self.file_reader(filepath, 3):
-            self.students[cwid] = Student(cwid, name, major)  # JRR: updated
+            self.students[cwid] = Student(cwid, name, major)  # Note: updated
 
     def read_instructors(self, filepath):
         """ Read instructors from the specified path and create instances of class Instructor """
